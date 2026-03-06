@@ -1,5 +1,8 @@
-**Student Name:** Ella Mae S. ALajid
-**Section:** #rd Year BSIT
+# Midterm Defense Exam
+
+**Student Name:** Ella Mae S. Alajid
+
+**Section:** 3rd Year BSIT
 
 **Date:** March 6, 2026
 
