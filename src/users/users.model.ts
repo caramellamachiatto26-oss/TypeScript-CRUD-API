@@ -91,6 +91,7 @@ export interface UserCreationAttributes
     }
 
     );
+    
 
     return User;
 }

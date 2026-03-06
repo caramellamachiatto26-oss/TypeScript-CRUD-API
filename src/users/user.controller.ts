@@ -4,7 +4,7 @@ import { Router } from 'express';
 import Joi from 'joi';
 import { Role } from '../_helpers/role';
 import { validateRequest } from '../_middleware/validateRequest';
-import { UserService } from './users.service';
+import { userService }from './users.service';
 
 
 const router = Router();
@@ -18,31 +18,31 @@ router.delete('/:id', _delete);
 export default router;
 
 function getAll(req: Request, res: Response, next: NextFunction): void {
-    UserService.getAll()
+    userService.getAll()
         .then(users => res.json(users))
         .catch(next);
 }
 
 function getById(req: Request, res: Response, next: NextFunction): void {
-    UserService.getById(Number(req.params.id))
+    userService.getById(Number(req.params.id))
         .then(user => res.json(user))
         .catch(next);
 }
 
-function create(req: Request, res: Response, next: NextFunction): void {
-    UserService.create(req.body)
-        .then(user => res.json(user))
+function create(req: Request, res: Response, next: NextFunction) {
+    userService.create(req.body)
+        .then(() => res.json({ message: "user created" })) // This line sends the response
         .catch(next);
 }
 
 function update(req: Request, res: Response, next: NextFunction): void {        
-    UserService.update(Number(req.params.id), req.body)
+    userService.update(Number(req.params.id), req.body)
         .then(user => res.json(user))   
         .catch(next);
 }
 
 function _delete(req: Request, res: Response, next: NextFunction): void {
-    UserService.delete(Number(req.params.id))
+    userService.delete(Number(req.params.id))
         .then(() => res.json({ message: 'User deleted successfully' }))
         .catch(next);
 }
@@ -53,8 +53,8 @@ function createSchema(req: Request, res: Response, next: NextFunction): void {
         firstName: Joi.string().empty(),
         lastName: Joi.string().empty(),
         role: Joi.string().valid(Role.Admin, Role.User).empty(),
-        email: Joi.string().email().empty(),
-        password: Joi.string().min(6).empty(),
+        email: Joi.string().email().required(),
+        password: Joi.string().min(6).required(),
         confirmPassword: Joi.string().valid(Joi.ref('password')).empty(''),
     }).with('password', 'confirmPassword');
     validateRequest(req, next, schema);

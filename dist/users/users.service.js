@@ -3,12 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
+exports.userService = void 0;
 // src/users/users.service.ts
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const db_1 = require("../_helpers/db");
 const role_1 = require("../_helpers/role");
-exports.UserService = {
+exports.userService = {
     getAll,
     getById,
     create,
@@ -28,8 +28,11 @@ async function create(params) {
     }
     const passwordHash = await bcryptjs_1.default.hash(params.password, 10);
     await db_1.db.User.create({
-        ...params,
+        email: params.email,
         passwordHash,
+        title: params.title || '',
+        firstName: params.firstName || '',
+        lastName: params.lastName || '',
         role: params.role || role_1.Role.User,
     });
 }

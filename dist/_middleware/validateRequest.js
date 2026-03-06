@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateRequest = validateRequest;
 function validateRequest(req, next, schema) {
     const options = {
-        abotEarly: false,
+        abortEarly: false,
         allowUnknown: true,
         stripUnknown: true,
     };

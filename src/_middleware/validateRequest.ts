@@ -8,7 +8,7 @@ export function validateRequest(
     schema: Joi.ObjectSchema
 ): void {
     const options = {
-        abotEarly: false,
+        abortEarly: false,
         allowUnknown: true,
         stripUnknown: true,
     };
