@@ -10,12 +10,13 @@ export interface UserAttributes {
     firstName: string;
     lastName: string;
     role: string;
+    isVerified: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
 
 export interface UserCreationAttributes 
-    extends Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
+    extends Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt' | 'isVerified'> {}
 
     export class User 
        extends Model<UserAttributes, UserCreationAttributes>
@@ -28,6 +29,7 @@ export interface UserCreationAttributes
     public firstName!: string;
     public lastName!: string;
     public role!: string;
+    public isVerified!: boolean;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
  }
@@ -65,6 +67,12 @@ export interface UserCreationAttributes
                 type: DataTypes.STRING,
                 allowNull: false
             },
+
+            isVerified: {
+              type: DataTypes.BOOLEAN,
+              allowNull: false,
+              defaultValue: false
+            },
             
         createdAt:{
             type: DataTypes.DATE,
@@ -89,7 +97,7 @@ export interface UserCreationAttributes
             withHash: { attributes: { include: ['passwordHash'] } }
         }
     }
-
+       
     );
     
 
