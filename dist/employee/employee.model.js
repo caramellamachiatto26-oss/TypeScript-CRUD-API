@@ -1,48 +1,47 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Employee = void 0;
 exports.default = default_1;
-// src/users/user.model.ts
+// src/employee/employee.model.ts
 const sequelize_1 = require("sequelize");
-class User extends sequelize_1.Model {
+class Employee extends sequelize_1.Model {
 }
-exports.User = User;
+exports.Employee = Employee;
 function default_1(sequelize) {
-    User.init({
+    Employee.init({
         id: {
             type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true
         },
-        email: {
+        employeeId: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false,
             unique: true
         },
-        passwordHash: {
+        userId: {
             type: sequelize_1.DataTypes.STRING,
-            allowNull: false
-        },
-        title: {
-            type: sequelize_1.DataTypes.STRING,
-            allowNull: false
-        },
-        firstName: {
-            type: sequelize_1.DataTypes.STRING,
-            allowNull: false
-        },
-        lastName: {
-            type: sequelize_1.DataTypes.STRING,
-            allowNull: false
-        },
-        role: {
-            type: sequelize_1.DataTypes.STRING,
-            allowNull: false
-        },
-        isVerified: {
-            type: sequelize_1.DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: false
+            references: {
+                model: 'users',
+                key: 'Id'
+            }
+        },
+        position: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: false
+        },
+        departmentId: {
+            type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+            allowNull: false,
+            references: {
+                model: 'departments',
+                key: 'id'
+            }
+        },
+        hireDate: {
+            type: sequelize_1.DataTypes.DATE,
+            allowNull: false
         },
         createdAt: {
             type: sequelize_1.DataTypes.DATE,
@@ -56,15 +55,9 @@ function default_1(sequelize) {
         },
     }, {
         sequelize,
-        modelName: 'User',
-        tableName: 'users',
+        modelName: 'Employee',
+        tableName: 'employees',
         timestamps: true,
-        defaultScope: {
-            attributes: { exclude: ['passwordHash'] }
-        },
-        scopes: {
-            withHash: { attributes: { include: ['passwordHash'] } }
-        }
     });
-    return User;
+    return Employee;
 }

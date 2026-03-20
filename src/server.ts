@@ -4,6 +4,10 @@ import cors from 'cors';
 import { errorHandler } from './_middleware/errorHandler';
 import { initialize } from './_helpers/db';
 import userController from './users/user.controller';
+import departmentController from './department/department.controller';
+import employeeController from './employee/employee.controller';
+import requestController from './requests/request.controller';
+import transferController from './transfer/transfer.controller';
 
 const app: Application = express();
 
@@ -13,6 +17,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
 app.use('/users', userController);
+app.use('/departments', departmentController);
+app.use('/employees', employeeController);
+app.use('/requests', requestController);
+app.use('/transfers', transferController);
 
 app.use(errorHandler);
 

@@ -51,9 +51,21 @@ async function initialize() {
     const sequelize = new sequelize_1.Sequelize(database, user, password, { dialect: 'mysql' });
     const { default: userModel } = await Promise.resolve().then(() => __importStar(require('../users/users.model')));
     exports.db.User = userModel(sequelize);
+    const { default: departmentModel } = await Promise.resolve().then(() => __importStar(require('../department/department.model')));
+    exports.db.Department = departmentModel(sequelize);
+    const { default: employeeModel } = await Promise.resolve().then(() => __importStar(require('../employee/employee.model')));
+    exports.db.Employee = employeeModel(sequelize);
+    const { default: requestModel } = await Promise.resolve().then(() => __importStar(require('../requests/requests.model')));
+    exports.db.Request = requestModel(sequelize);
+    const { default: transferModel } = await Promise.resolve().then(() => __importStar(require('../transfer/transfer.model')));
+    exports.db.Transfer = transferModel(sequelize);
+    // Define associations
+    exports.db.Employee.belongsTo(exports.db.User, { foreignKey: 'email', targetKey: 'email', as: 'user' });
+    exports.db.Employee.belongsTo(exports.db.Department, { foreignKey: 'departmentId', as: 'department' });
+    exports.db.Request.belongsTo(exports.db.User, { foreignKey: 'userId', as: 'user' });
+    exports.db.Transfer.belongsTo(exports.db.Employee, { foreignKey: 'employeeId', as: 'employee' });
+    exports.db.Transfer.belongsTo(exports.db.Department, { foreignKey: 'fromDepartmentId', as: 'fromDepartment' });
+    exports.db.Transfer.belongsTo(exports.db.Department, { foreignKey: 'toDepartmentId', as: 'toDepartment' });
     await sequelize.sync({ alter: true });
     console.log('Database Initialized and models synced');
-}
-function userController(sequelize) {
-    throw new Error('Function not implemented.');
 }

@@ -4,7 +4,7 @@ import { Router } from 'express';
 import Joi from 'joi';
 import { Role } from '../_helpers/role';
 import { validateRequest } from '../_middleware/validateRequest';
-import { userService }from './users.service';
+import { userService } from './users.service';
 
 
 const router = Router();
